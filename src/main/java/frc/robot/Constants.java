@@ -38,4 +38,9 @@ public final class Constants {
         public static final int reverseLimit = 10;
     }
 
+    public static final class ShooterConstants{
+        public static final int shooterID = 5;
+
+    }
+
 }
