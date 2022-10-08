@@ -52,7 +52,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   /* Stops motor */
-  public void stopMotors() {
+  public void stopMotor() {
     shooter.set(0);
   }
 

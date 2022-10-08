@@ -38,6 +38,10 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(speed * IntakeConstants.multiplier);
   }
 
+  public void stopMotor() {
+    intakeMotor.set(0);
+  }
+
   public void publishData(){
     SmartDashboard.putBoolean("Intake In State", intakeIn.get());
     SmartDashboard.putBoolean("Intake Out State", intakeOut.get());

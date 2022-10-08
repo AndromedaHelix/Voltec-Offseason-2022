@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ChasisConstants;
+import com.kauailabs.navx.frc.AHRS;
+
 
 public class ChassisSubsystem extends SubsystemBase {
 
@@ -27,6 +29,8 @@ public class ChassisSubsystem extends SubsystemBase {
 
   private Solenoid forwardSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, ChasisConstants.highGearSolenoid);
   private Solenoid backwardSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, ChasisConstants.lowGearSolenoid);
+
+  AHRS gyro = new AHRS();
 
   public ChassisSubsystem() {
     rearLeft.follow(frontLeft);
@@ -93,5 +97,7 @@ public class ChassisSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Joystick", leftSpeed);
     SmartDashboard.putNumber("Right Joystick", rightSpeed);
 
+    double angle = gyro.getAngle();
+    SmartDashboard.putNumber("NAVX", angle);
   }
 }

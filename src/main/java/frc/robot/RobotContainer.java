@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -22,6 +23,7 @@ import frc.robot.commands.ShooterSpeed;
 import frc.robot.subsystems.ChassisSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DeliverySubsystem;
+import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -34,17 +36,19 @@ public class RobotContainer {
     private final ClimberSubsystem climber;
     private final ChassisSubsystem chassis;
     private final LimelightSubsystem limelight;
+    private final HoodSubsystem hood;
 
     private final XboxControllerUpgrade joystick1 = new XboxControllerUpgrade(OIConstants.driverControllerPort1, 0.2);
     private final XboxControllerUpgrade joystick2 = new XboxControllerUpgrade(OIConstants.driverControllerPort2, 0.2);
 
-    public RobotContainer(DeliverySubsystem delivery, ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber, ChassisSubsystem chassis, LimelightSubsystem limelight) {
+    public RobotContainer(DeliverySubsystem delivery, ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber, ChassisSubsystem chassis, LimelightSubsystem limelight, HoodSubsystem hood) {
         this.delivery = delivery;
         this.shooter = shooter;
         this.intake = intake;
         this.climber = climber;
         this.chassis = chassis;
         this.limelight = limelight;
+        this.hood = hood;
        
         /* Tan Drive */
         chassis.setDefaultCommand(
@@ -64,7 +68,23 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
 
-        /* Joystick 2 */
+        /* Joystick 1 */
+        /* Toggle reduction */
+        new JoystickButton(joystick1, Button.kY.value)
+                .whenPressed(
+                        new InstantCommand(() -> chassis.toggleReduction()));
+
+        /* Toggle Brake */
+        new JoystickButton(joystick1, Button.kRightBumper.value)
+                .whileHeld(new InstantCommand(() -> chassis.toggleBrake(false)))
+                .whenReleased(new InstantCommand(() -> chassis.toggleBrake(true)));
+
+        /* Toggle Aim */
+        new JoystickButton(joystick1, Button.kLeftBumper.value)
+                .whileHeld(new StartEndCommand(() -> limelight.toolgeAim(), () -> limelight.toolgeAim(), limelight));
+
+
+                /* Joystick 2 */
         /* Shooting next to fender */
         new JoystickButton(joystick2, Button.kA.value)
                 .whileHeld(new SequentialCommandGroup(
@@ -114,21 +134,6 @@ public class RobotContainer {
         /* Inverse rotate delivery */
         new JoystickButton(joystick2, Button.kRightBumper.value)
                 .whileHeld(new DeliveryEnable(-0.3, delivery));
-
-        /* Joystick 1 */
-        /* Toggle reduction */
-        new JoystickButton(joystick1, Button.kY.value)
-                .whenPressed(
-                        new InstantCommand(() -> chassis.toggleReduction()));
-
-        /* Toggle Brake */
-        new JoystickButton(joystick1, Button.kRightBumper.value)
-                .whileHeld(new InstantCommand(() -> chassis.toggleBrake(false)))
-                .whenReleased(new InstantCommand(() -> chassis.toggleBrake(true)));
-
-        /* Toggle Aim */
-        new JoystickButton(joystick1, Button.kLeftBumper.value)
-                .whileHeld(new StartEndCommand(() -> limelight.toolgeAim(), () -> limelight.toolgeAim(), limelight));
     }
 
     public Command getAutonomousCommand() {

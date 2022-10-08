@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.DeliveryEnable;
 import frc.robot.commands.MoveClimber;
@@ -18,6 +19,7 @@ import frc.robot.commands.ShooterSpeed;
 import frc.robot.subsystems.ChassisSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DeliverySubsystem;
+import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -27,12 +29,14 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private DeliverySubsystem delivery = new DeliverySubsystem();
-  private ShooterSubsystem shooter = new ShooterSubsystem();
-  private IntakeSubsystem intake = new IntakeSubsystem();
-  private ClimberSubsystem climber = new ClimberSubsystem();
-  private ChassisSubsystem chassis = new ChassisSubsystem();
+  private final DeliverySubsystem delivery = new DeliverySubsystem();
+  private final ShooterSubsystem shooter = new ShooterSubsystem();
+  private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final ClimberSubsystem climber = new ClimberSubsystem();
+  private final ChassisSubsystem chassis = new ChassisSubsystem();
   private final LimelightSubsystem limelight = new LimelightSubsystem();
+  private final HoodSubsystem hood = new HoodSubsystem();
+
 
   boolean intakeState = false;
 
@@ -40,7 +44,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    m_robotContainer = new RobotContainer(delivery, shooter, intake, climber, chassis, limelight);
+    m_robotContainer = new RobotContainer(delivery, shooter, intake, climber, chassis, limelight, hood);
   }
 
   @Override
@@ -106,21 +110,45 @@ public class Robot extends TimedRobot {
     double trueTime = time - startTime;
 
     if (time - startTime < 3) {
-      chassis.tankDrive(1, 1);
+      chassis.tankDrive(0.5, 0.5);
     } else if (time - startTime >= 3 && time - startTime < 6) {
-      chassis.tankDrive(-1, -1);
+      chassis.tankDrive(-0.5, -0.5);
     } else if (time - startTime >= 6 && time - startTime < 9) {
-      chassis.tankDrive(1, -1);
+      chassis.tankDrive(0.5, -0.5);
     } else if (time - startTime >= 9 && time - startTime < 12) {
-      chassis.tankDrive(-1, 1);
+      chassis.tankDrive(-0.5, 0.5);
     } else if (time - startTime >= 12 && time - startTime < 15) {
       chassis.tankDrive(0, 0);
-      climber.setClimberSpeed(ClimberConstants.speed);
-    } else if (trueTime >= 15 && trueTime < 18) {
-      climber.setClimberSpeed(ClimberConstants.speed);
-    } 
-    /* else if (trueTime >= 18 && trueTime < 21) {
-      climber.setClimberSpeed(-ClimberConstants.speed);
-    } */
+    } else if (trueTime >= 15 && trueTime < 25) {
+      shooter.setShooterVelocity(ShooterConstants.shooterFender);
+      if (shooter.isInTolerance()) {
+        delivery.setSpeed(0.7);
+      }
+    } else if (trueTime >= 20 && trueTime < 23) {
+      shooter.stopMotor();
+      delivery.stopRotation();
+    } else if (trueTime >= 23 && trueTime < 27) {
+      intake.setIntakeMotorSpeed(IntakeConstants.intakeSpeed);
+    } else if (trueTime >= 27 && trueTime < 30) {
+      intake.stopMotor();
+    } else if (trueTime >= 30 & trueTime < 33) {
+      intake.setIntakeMotorSpeed(-IntakeConstants.intakeSpeed);
+    } else if (trueTime >= 33 && trueTime < 36) {
+      CommandScheduler.getInstance().disable();
+    }
+
+    // climber.setClimberSpeed(ClimberConstants.speed);
+    /*
+     * else if (trueTime >= 18 && trueTime < 21) {
+     * climber.setClimberSpeed(-ClimberConstants.speed);
+     * } else if(trueTime >= 21 && trueTime < 23){
+     * shooter.setShooterVelocity(ShooterConstants.shooterFender);
+     * if(shooter.isInTolerance()){
+     * delivery.setDeliveryRotation(0.7);
+     * }
+     * }
+     */
+
+    // }
   }
 }

@@ -28,15 +28,14 @@ public final class Constants {
     public static final class ClimberConstants {
         public static final int climberMotorID = 4;
 
-        public static final int forwardLimit = 150; //165
-        public static final int reverseLimit = 10; //10
+        public static final int forwardLimit = 150; // 165
+        public static final int reverseLimit = 10; // 10
 
         public static final double speed = 0.8;
     }
 
     public static final class ShooterConstants {
         public static final int shooterID = 5;
-        public static final int hoodID = 2;
         // Shooter PID
         public static final double shooterkP = 5e-5;
         public static final double shooterkI = 1e-7;
@@ -44,15 +43,23 @@ public final class Constants {
         public static final double shooterkIz = 0;
         public static final double shooterkFF = 1.5e-4;
 
-        
         // Shooting velocities from diff positinos
         public static final int shooterFender = 3500;
         public static final int shooter1MeterFender = 4000;
-        
+
         public static int velocityTolerance = 25;
     }
 
-    public static final class DeliveryConstants{
+    public static final class HoodConstants {
+        public static final int hoodID = 2;
+
+        public static final int forwardLimit = 0; //TODO: FIX
+        public static final int reverseLimit = 10;
+
+        public static final double speed = 0.1;
+    }
+
+    public static final class DeliveryConstants {
         public static final int deliveryID = 3;
 
         // Delivery PID
@@ -63,7 +70,7 @@ public final class Constants {
         public static final double deliverykFF = 0.0000;
     }
 
-    public static final class OIConstants{
+    public static final class OIConstants {
         public static final int driverControllerPort1 = 0;
         public static final int driverControllerPort2 = 1;
     }
