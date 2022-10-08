@@ -83,6 +83,17 @@ public class RobotContainer {
         new JoystickButton(joystick1, Button.kLeftBumper.value)
                 .whileHeld(new StartEndCommand(() -> limelight.toolgeAim(), () -> limelight.toolgeAim(), limelight));
 
+        /* Move hood */
+        joystick1.rightTriggerButton.whileHeld(
+                new StartEndCommand(
+                        () -> hood.setHoodSpeed(HoodConstants.speed), 
+                        () -> hood.setHoodSpeed(0),
+                        hood));
+        joystick1.leftTriggerButton.whileHeld(
+                new StartEndCommand(
+                        () -> hood.setHoodSpeed(-HoodConstants.speed), 
+                        () -> hood.setHoodSpeed(0),
+                        hood));
 
                 /* Joystick 2 */
         /* Shooting next to fender */

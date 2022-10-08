@@ -8,14 +8,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.DeliveryEnable;
-import frc.robot.commands.MoveClimber;
-import frc.robot.commands.ShooterSpeed;
 import frc.robot.subsystems.ChassisSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DeliverySubsystem;
@@ -124,31 +119,23 @@ public class Robot extends TimedRobot {
       if (shooter.isInTolerance()) {
         delivery.setSpeed(0.7);
       }
-    } else if (trueTime >= 20 && trueTime < 23) {
+    } else if (trueTime >= 25 && trueTime < 28) {
       shooter.stopMotor();
       delivery.stopRotation();
-    } else if (trueTime >= 23 && trueTime < 27) {
+    } else if (trueTime >= 28 && trueTime < 31) {
       intake.setIntakeMotorSpeed(IntakeConstants.intakeSpeed);
-    } else if (trueTime >= 27 && trueTime < 30) {
+    } else if (trueTime >= 31 && trueTime < 34) {
       intake.stopMotor();
-    } else if (trueTime >= 30 & trueTime < 33) {
+    } else if (trueTime >= 34 & trueTime < 37) {
       intake.setIntakeMotorSpeed(-IntakeConstants.intakeSpeed);
-    } else if (trueTime >= 33 && trueTime < 36) {
+    } else if (trueTime >= 37 && trueTime < 40) {
+      intake.stopMotor();
       CommandScheduler.getInstance().disable();
+    } else if(trueTime >= 40 && trueTime < 43){
+      climber.setClimberSpeed(ClimberConstants.speed);
+    } else if(trueTime >= 43 && trueTime < 36){
+      climber.setClimberSpeed(-ClimberConstants.speed);
     }
-
-    // climber.setClimberSpeed(ClimberConstants.speed);
-    /*
-     * else if (trueTime >= 18 && trueTime < 21) {
-     * climber.setClimberSpeed(-ClimberConstants.speed);
-     * } else if(trueTime >= 21 && trueTime < 23){
-     * shooter.setShooterVelocity(ShooterConstants.shooterFender);
-     * if(shooter.isInTolerance()){
-     * delivery.setDeliveryRotation(0.7);
-     * }
-     * }
-     */
-
     // }
   }
 }
