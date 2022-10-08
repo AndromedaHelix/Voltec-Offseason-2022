@@ -4,40 +4,135 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.DeliveryEnable;
+import frc.robot.commands.MoveClimber;
+import frc.robot.commands.ShooterSpeed;
+import frc.robot.subsystems.ChassisSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.DeliverySubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.utils.XboxControllerUpgrade;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-  }
+    private final DeliverySubsystem delivery;
+    private final ShooterSubsystem shooter;
+    private final IntakeSubsystem intake;
+    private final ClimberSubsystem climber;
+    private final ChassisSubsystem chassis;
+    private final LimelightSubsystem limelight;
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {}
+    private final XboxControllerUpgrade joystick1 = new XboxControllerUpgrade(OIConstants.driverControllerPort1, 0.2);
+    private final XboxControllerUpgrade joystick2 = new XboxControllerUpgrade(OIConstants.driverControllerPort2, 0.2);
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return null;
-  }
+    public RobotContainer(DeliverySubsystem delivery, ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber, ChassisSubsystem chassis, LimelightSubsystem limelight) {
+        this.delivery = delivery;
+        this.shooter = shooter;
+        this.intake = intake;
+        this.climber = climber;
+        this.chassis = chassis;
+        this.limelight = limelight;
+       
+        /* Tan Drive */
+        chassis.setDefaultCommand(
+                new RunCommand(() -> chassis.tankDrive(joystick1.getLeftY(), joystick1.getRightY()), chassis));
+
+        /* Arcade Drive */
+        /*
+         * chassis.setDefaultCommand(
+         * new RunCommand(() -> chassis.arcadeDrive(joystick1.getLeftY(),
+         * -joystick1.getRightX()), chassis));
+         */
+
+        configureButtonBindings();
+    }
+
+    // BUTTON MAP FROM SMARTDASHBOARD
+
+    private void configureButtonBindings() {
+
+        /* Joystick 2 */
+        /* Shooting next to fender */
+        new JoystickButton(joystick2, Button.kA.value)
+                .whileHeld(new SequentialCommandGroup(
+                        new ShooterSpeed(ShooterConstants.shooterFender, shooter),
+                        new DeliveryEnable(0.7, delivery)))
+                .whenReleased(new ShooterSpeed(0, shooter));
+
+        /* Shooting a meter from fender */
+        new JoystickButton(joystick2, Button.kB.value)
+                .whileHeld(new SequentialCommandGroup(
+                        new ShooterSpeed(ShooterConstants.shooter1MeterFender, shooter),
+                        new DeliveryEnable(0.7, delivery)))
+                .whenReleased(new ShooterSpeed(0, shooter));
+
+        /* Dropping ball */
+        new JoystickButton(joystick2, Button.kY.value)
+                .whileHeld(new SequentialCommandGroup(
+                        new ShooterSpeed(1800, shooter),
+                        new DeliveryEnable(0.3, delivery)))
+                .whenReleased(new ShooterSpeed(0, shooter));
+
+        /* Move climber */
+        joystick2.Dpad.Down.whileHeld(
+                new MoveClimber(-ClimberConstants.speed, climber));
+
+        joystick2.Dpad.Up.whileHeld(
+                new MoveClimber(ClimberConstants.speed, climber));
+
+        /* Toggle Intake */
+        new JoystickButton(joystick2, Button.kX.value)
+                .whenPressed(
+                        new InstantCommand(() -> intake.toggleIntake()));
+
+        /* Move intake */
+        joystick2.rightTriggerButton.whileHeld(
+                new StartEndCommand(
+                        () -> intake.setIntakeMotorSpeed(IntakeConstants.intakeSpeed),
+                        () -> intake.setIntakeMotorSpeed(0),
+                        intake));
+
+        joystick2.leftTriggerButton.whileHeld(
+                new StartEndCommand(
+                        () -> intake.setIntakeMotorSpeed(-IntakeConstants.intakeSpeed),
+                        () -> intake.setIntakeMotorSpeed(0),
+                        intake));
+
+        /* Inverse rotate delivery */
+        new JoystickButton(joystick2, Button.kRightBumper.value)
+                .whileHeld(new DeliveryEnable(-0.3, delivery));
+
+        /* Joystick 1 */
+        /* Toggle reduction */
+        new JoystickButton(joystick1, Button.kY.value)
+                .whenPressed(
+                        new InstantCommand(() -> chassis.toggleReduction()));
+
+        /* Toggle Brake */
+        new JoystickButton(joystick1, Button.kRightBumper.value)
+                .whileHeld(new InstantCommand(() -> chassis.toggleBrake(false)))
+                .whenReleased(new InstantCommand(() -> chassis.toggleBrake(true)));
+
+        /* Toggle Aim */
+        new JoystickButton(joystick1, Button.kLeftBumper.value)
+                .whileHeld(new StartEndCommand(() -> limelight.toolgeAim(), () -> limelight.toolgeAim(), limelight));
+    }
+
+    public Command getAutonomousCommand() {
+        // An ExampleCommand will run in autonomous
+        return null;
+    }
 }

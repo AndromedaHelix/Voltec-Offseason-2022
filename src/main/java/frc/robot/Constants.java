@@ -4,43 +4,68 @@
 
 package frc.robot;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
-    public static final class ChasisConstants{
+    public static final class ChasisConstants {
         public static final int frontLeftID = 8;
-        public static final int frontRightID = 9;
+        public static final int frontRightID = 1;
         public static final int rearLeftID = 6;
-        public static final int rearRightID = 1;
+        public static final int rearRightID = 9;
 
         public static final int highGearSolenoid = 0;
         public static final int lowGearSolenoid = 1;
     }
 
-    public static final class IntakeConstants{
+    public static final class IntakeConstants {
         public static final int intakeMotorID = 1;
         public static final int intakeIn = 2;
         public static final int intakeOut = 3;
 
         public static final double multiplier = 1;
+        public static final double intakeSpeed = 0.4;
+
     }
 
-    public static final class ClimberConstants{
+    public static final class ClimberConstants {
         public static final int climberMotorID = 4;
 
-        public static final int forwardLimit = 165;
-        public static final int reverseLimit = 10;
+        public static final int forwardLimit = 150; //165
+        public static final int reverseLimit = 10; //10
+
+        public static final double speed = 0.8;
     }
 
-    public static final class ShooterConstants{
+    public static final class ShooterConstants {
         public static final int shooterID = 5;
+        public static final int hoodID = 2;
+        // Shooter PID
+        public static final double shooterkP = 5e-5;
+        public static final double shooterkI = 1e-7;
+        public static final double shooterkD = 1e-3;
+        public static final double shooterkIz = 0;
+        public static final double shooterkFF = 1.5e-4;
 
+        
+        // Shooting velocities from diff positinos
+        public static final int shooterFender = 3500;
+        public static final int shooter1MeterFender = 4000;
+        
+        public static int velocityTolerance = 25;
+    }
+
+    public static final class DeliveryConstants{
+        public static final int deliveryID = 3;
+
+        // Delivery PID
+        public static final double deliverykP = 0.7;
+        public static final double deliverykI = 0;
+        public static final double deliverykD = 0.5;
+        public static final double deliverykIz = 0;
+        public static final double deliverykFF = 0.0000;
+    }
+
+    public static final class OIConstants{
+        public static final int driverControllerPort1 = 0;
+        public static final int driverControllerPort2 = 1;
     }
 
 }

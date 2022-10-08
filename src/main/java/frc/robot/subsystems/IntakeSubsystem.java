@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
@@ -22,7 +23,9 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    publishData();
+  }
 
   public void toggleIntake() {
     boolean intakeState = intakeIn.get();
@@ -33,5 +36,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void setIntakeMotorSpeed(double speed){
     intakeMotor.set(speed * IntakeConstants.multiplier);
+  }
+
+  public void publishData(){
+    SmartDashboard.putBoolean("Intake In State", intakeIn.get());
+    SmartDashboard.putBoolean("Intake Out State", intakeOut.get());
   }
 }

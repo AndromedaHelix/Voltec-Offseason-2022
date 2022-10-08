@@ -9,6 +9,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
@@ -29,9 +30,15 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    publishData();
+  }
 
   public void setClimberSpeed (double speed){
     climberMotor.set(speed);
+  }
+
+  public void publishData() {
+    SmartDashboard.putNumber("ClimberPosition", climberEncoder.getPosition());
   }
 }
