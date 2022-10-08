@@ -18,7 +18,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 
 public class ChassisSubsystem extends SubsystemBase {
-
   private WPI_TalonFX frontLeft = new WPI_TalonFX(ChasisConstants.frontLeftID);
   private WPI_TalonFX frontRight = new WPI_TalonFX(ChasisConstants.frontRightID);
   private WPI_TalonFX rearLeft = new WPI_TalonFX(ChasisConstants.rearLeftID);

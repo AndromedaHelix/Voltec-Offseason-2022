@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ClimberSubsystem climber = new ClimberSubsystem();
   private final ChassisSubsystem chassis = new ChassisSubsystem();
-  private final LimelightSubsystem limelight = new LimelightSubsystem();
+  private final LimelightSubsystem limelight = new LimelightSubsystem(chassis);
   private final HoodSubsystem hood = new HoodSubsystem();
 
 

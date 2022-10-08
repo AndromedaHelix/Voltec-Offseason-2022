@@ -74,5 +74,12 @@ public final class Constants {
         public static final int driverControllerPort1 = 0;
         public static final int driverControllerPort2 = 1;
     }
+    
+    public static final class VisionConstants{
+        public static final double kpAim = -0.01;
+        public static final double kpDistance = -0.05; 
+        public static final double min_aim_command = 0.0235;
+        public static final double steeringAdjust = 0.0;
+    }
 
 }

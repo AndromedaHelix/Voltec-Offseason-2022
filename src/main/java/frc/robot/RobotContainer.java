@@ -81,7 +81,7 @@ public class RobotContainer {
 
         /* Toggle Aim */
         new JoystickButton(joystick1, Button.kLeftBumper.value)
-                .whileHeld(new StartEndCommand(() -> limelight.toolgeAim(), () -> limelight.toolgeAim(), limelight));
+                .whileHeld(new StartEndCommand(() -> limelight.toggleAim(), () -> limelight.toggleAim(), limelight));
 
         /* Move hood */
         joystick1.rightTriggerButton.whileHeld(
@@ -95,7 +95,7 @@ public class RobotContainer {
                         () -> hood.setHoodSpeed(0),
                         hood));
 
-                /* Joystick 2 */
+        /* Joystick 2 */
         /* Shooting next to fender */
         new JoystickButton(joystick2, Button.kA.value)
                 .whileHeld(new SequentialCommandGroup(
@@ -149,6 +149,6 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return null;
+        return new StartEndCommand(() -> limelight.toggleAim(), () -> limelight.toggleAim(), limelight);
     }
 }
