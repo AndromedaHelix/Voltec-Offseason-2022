@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import com.stuypulse.stuylib.network.limelight.Limelight;
 
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //TODO FINISH
 /*
@@ -22,7 +21,6 @@ import frc.robot.Constants.VisionConstants;
 
 public class LimelightSubsystem extends SubsystemBase {
   public static Limelight limelight;
-  private final ChassisSubsystem chassis;
 
   private final Object lock = new Object();
   private final Notifier notifier;
@@ -31,7 +29,6 @@ public class LimelightSubsystem extends SubsystemBase {
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem(ChassisSubsystem chassis) {
     limelight = Limelight.getInstance();
-    this.chassis = chassis;
     notifier = new Notifier(() -> {
       synchronized (lock) {
         if (firstRun) {
