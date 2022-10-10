@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 /*
  * Ajustar angulo chassis
  * Ajustar angulo hood
- * Ajustar velocidad motor hood
  * Igual y se puede ajustar el ángulo y velocidad,
  * así como la posición del chassis a un punto definido en la cancha. 
  * (USO DE VARIAS PIPELINES)
@@ -71,10 +70,6 @@ public class LimelightSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-  }
-
-  public void angleAdjustment() {
-
   }
 
   public void toggleAim() {

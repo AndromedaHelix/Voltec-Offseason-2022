@@ -19,7 +19,6 @@ public class DeliverySubsystem extends SubsystemBase {
   private CANSparkMax delivery = new CANSparkMax(DeliveryConstants.deliveryID, MotorType.kBrushless);
   private SparkMaxPIDController deliveryPID;
   private RelativeEncoder deliveryEncoder;
-  private double deliverySetpoint;
 
   public DeliverySubsystem() {
     delivery.restoreFactoryDefaults();
@@ -40,32 +39,25 @@ public class DeliverySubsystem extends SubsystemBase {
     publishData();
   }
 
-  /* Sets delivery rotation */
-  public void setDeliveryRotation(double rotSetpoint) {
-    this.deliverySetpoint = rotSetpoint;
-    deliveryPID.setReference(rotSetpoint, ControlType.kPosition);
-  }
-
+  /* Stops delivery rotation */
   public void stopRotation() {
     delivery.set(0);
-    deliverySetpoint = 0;
     resetEncoder();
   }
 
+  /* Getter function for delivery speed */
   public double getSpeed() {
     return delivery.get();
   }
 
-  public void resetEncoder() {
-    deliveryEncoder.setPosition(0);
-  }
-
-  public double deliveryError() {
-    return Math.abs(deliverySetpoint - deliveryEncoder.getPosition());
-  }
-
+  /* Setter function for delivery speed */
   public void setSpeed(double speed) {
     delivery.set(speed);
+  }
+
+  /* Resets delivery encoder's position */
+  public void resetEncoder() {
+    deliveryEncoder.setPosition(0);
   }
 
   public void publishData() {

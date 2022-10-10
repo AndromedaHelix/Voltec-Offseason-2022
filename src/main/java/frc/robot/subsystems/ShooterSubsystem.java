@@ -47,6 +47,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterPID.setReference(velSetpoint, ControlType.kVelocity);
   }
 
+  /* Checs if the shooter is near the setpoint */
   public boolean isInTolerance() {
     return Math.abs(shooterEncoder.getVelocity()-shooterSetpoint)<ShooterConstants.velocityTolerance;
   }

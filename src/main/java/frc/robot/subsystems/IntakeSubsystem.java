@@ -27,6 +27,7 @@ public class IntakeSubsystem extends SubsystemBase {
     publishData();
   }
 
+  /* Toggle intake solenoids */
   public void toggleIntake() {
     boolean intakeState = intakeIn.get();
 
@@ -34,10 +35,12 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeOut.set((intakeState) ? intakeState : intakeState);
   }
 
+  /* Sets intake motor speed */
   public void setIntakeMotorSpeed(double speed){
     intakeMotor.set(speed * IntakeConstants.multiplier);
   }
 
+  /* Stops motor */
   public void stopMotor() {
     intakeMotor.set(0);
   }

@@ -55,6 +55,7 @@ public class ChassisSubsystem extends SubsystemBase {
     publishData();
   }
 
+  /* Tank drive function */
   public void tankDrive(double leftSpeed, double rightSpeed) {
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
@@ -62,10 +63,12 @@ public class ChassisSubsystem extends SubsystemBase {
     chassis.tankDrive(leftSpeed, rightSpeed);
   }
 
+  /* Arcade drive function */
   public void arcadeDrive(double linearSpeed, double rotSpeed) {
     chassis.arcadeDrive(linearSpeed, rotSpeed);
   }
 
+  /* Changes reduction state */
   public void toggleReduction() {
     var currentState = forwardSolenoid.get();
 
@@ -73,6 +76,7 @@ public class ChassisSubsystem extends SubsystemBase {
     backwardSolenoid.set(currentState);
   }
 
+  /* Changes brake state */
   public void toggleBrake(boolean state) {
     var brakeState = state;
 

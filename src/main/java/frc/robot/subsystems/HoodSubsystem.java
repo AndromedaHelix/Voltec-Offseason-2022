@@ -34,6 +34,7 @@ public class HoodSubsystem extends SubsystemBase {
     publishData();
   }
 
+  /* Sets hood speed */
   public void setHoodSpeed (double speed){
     hoodMotor.set(speed);
   }

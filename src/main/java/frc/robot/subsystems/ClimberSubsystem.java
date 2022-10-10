@@ -34,6 +34,7 @@ public class ClimberSubsystem extends SubsystemBase {
     publishData();
   }
 
+  /* Sets climber speed */
   public void setClimberSpeed (double speed){
     climberMotor.set(speed);
   }

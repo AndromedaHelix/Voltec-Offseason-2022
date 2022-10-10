@@ -28,7 +28,7 @@ public class DeliveryEnable extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    delivery.setSpeed(0);
+    delivery.stopRotation();
   }
 
   @Override
