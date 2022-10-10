@@ -4,10 +4,16 @@
 
 package frc.robot.subsystems;
 
+import java.io.File;
+import java.util.List;
+import java.util.Random;
+
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.music.Orchestra;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -30,6 +36,7 @@ public class ChassisSubsystem extends SubsystemBase {
   private Solenoid backwardSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, ChasisConstants.lowGearSolenoid);
 
   AHRS gyro = new AHRS();
+  Orchestra orchestra;
 
   public ChassisSubsystem() {
     rearLeft.follow(frontLeft);
@@ -48,6 +55,8 @@ public class ChassisSubsystem extends SubsystemBase {
     frontRight.setNeutralMode(NeutralMode.Coast);
     rearLeft.setNeutralMode(NeutralMode.Coast);
     rearRight.setNeutralMode(NeutralMode.Coast);
+
+		orchestra = new Orchestra(List.of(frontLeft, rearLeft, frontRight, rearRight));
   }
 
   @Override
@@ -59,6 +68,7 @@ public class ChassisSubsystem extends SubsystemBase {
   public void tankDrive(double leftSpeed, double rightSpeed) {
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
+    orchestra.play();
 
     chassis.tankDrive(leftSpeed, rightSpeed);
   }
@@ -93,6 +103,23 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
   }
+  /* Picks a random song from the deploy directory and loads int into the orchestra */
+  public void prepareSong() {
+		var songs = new File(Filesystem.getDeployDirectory() + "/MIDI/").listFiles();
+		var song = songs[new Random().nextInt(songs.length)].toString();
+
+		System.out.println("Ready to play: '" + song + "'...");
+		orchestra.loadMusic(song);
+	}
+  
+  /* Plays/Pauses currently loaded song */
+  public void toggleSong() {
+		if (!orchestra.isPlaying())
+			orchestra.play();
+		else
+			orchestra.pause();
+	}
+
 
   public void publishData() {
     SmartDashboard.putNumber("Left Speed", frontLeft.get());

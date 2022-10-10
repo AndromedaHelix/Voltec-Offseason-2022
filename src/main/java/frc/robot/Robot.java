@@ -136,6 +136,7 @@ public class Robot extends TimedRobot {
     } else if(trueTime >= 43 && trueTime < 36){
       climber.setClimberSpeed(-ClimberConstants.speed);
     }
-    // }
+    chassis.prepareSong();
+    chassis.toggleSong();
   }
 }
