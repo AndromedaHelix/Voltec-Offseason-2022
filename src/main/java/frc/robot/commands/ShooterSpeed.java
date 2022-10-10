@@ -7,10 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
-/*
- * TODO: Consider using command inline rather than writing a subclass
- * https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
- */
 public class ShooterSpeed extends CommandBase {
   private final ShooterSubsystem shooter;
   private int shooterSpeed;
