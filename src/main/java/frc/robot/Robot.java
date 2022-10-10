@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    double time = Timer.getFPGATimestamp();
+    /* double time = Timer.getFPGATimestamp();
     double trueTime = time - startTime;
 
     if (time - startTime < 3) {
@@ -135,7 +135,7 @@ public class Robot extends TimedRobot {
       climber.setClimberSpeed(ClimberConstants.speed);
     } else if(trueTime >= 43 && trueTime < 36){
       climber.setClimberSpeed(-ClimberConstants.speed);
-    }
+    } */
     chassis.prepareSong();
     chassis.toggleSong();
   }
