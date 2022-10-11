@@ -92,7 +92,7 @@ public class RobotContainer {
                                                 limelight));
 
                 /* Move hood */
-                joystick1.rightTriggerButton.whileHeld(
+                /* joystick1.rightTriggerButton.whileHeld(
                                 new StartEndCommand(
                                                 () -> hood.setHoodSpeed(HoodConstants.speed),
                                                 () -> hood.setHoodSpeed(0),
@@ -101,7 +101,7 @@ public class RobotContainer {
                                 new StartEndCommand(
                                                 () -> hood.setHoodSpeed(-HoodConstants.speed),
                                                 () -> hood.setHoodSpeed(0),
-                                                hood));
+                                                hood)); */
 
                 /* Joystick 2 */
                 /* Shooting next to fender */
