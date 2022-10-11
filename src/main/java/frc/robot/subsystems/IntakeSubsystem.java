@@ -36,7 +36,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   /* Sets intake motor speed */
-  public void setIntakeMotorSpeed(double speed){
+  public void setIntakeMotorSpeed(double speed) {
     intakeMotor.set(speed * IntakeConstants.multiplier);
   }
 
@@ -45,7 +45,18 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(0);
   }
 
-  public void publishData(){
+  /* These two functions are only for the autonomous */
+  public void intakeIn() {
+    intakeIn.set(true);
+    intakeOut.set(false);
+  }
+
+  public void intakeOut() {
+    intakeOut.set(true);
+    intakeIn.set(false);
+  }
+
+  public void publishData() {
     SmartDashboard.putBoolean("Intake In State", intakeIn.get());
     SmartDashboard.putBoolean("Intake Out State", intakeOut.get());
   }
