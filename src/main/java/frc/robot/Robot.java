@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
 
   private final DeliverySubsystem delivery = new DeliverySubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
-  private final IntakeSubsystem intake = new IntakeSubsystem();
+  // private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ClimberSubsystem climber = new ClimberSubsystem();
   private final ChassisSubsystem chassis = new ChassisSubsystem();
   private final LimelightSubsystem limelight = new LimelightSubsystem(chassis);
@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    m_robotContainer = new RobotContainer(delivery, shooter, intake, climber, chassis, limelight, hood);
+    // m_robotContainer = new RobotContainer(delivery, shooter, intake, climber, chassis, limelight, hood);
   }
 
   @Override
