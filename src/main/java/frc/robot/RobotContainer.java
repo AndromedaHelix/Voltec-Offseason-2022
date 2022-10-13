@@ -92,16 +92,16 @@ public class RobotContainer {
                                                 limelight));
 
                 /* Move hood */
-                /* joystick1.rightTriggerButton.whileHeld(
-                                new StartEndCommand(
-                                                () -> hood.setHoodSpeed(HoodConstants.speed),
-                                                () -> hood.setHoodSpeed(0),
-                                                hood));
-                joystick1.leftTriggerButton.whileHeld(
-                                new StartEndCommand(
-                                                () -> hood.setHoodSpeed(-HoodConstants.speed),
-                                                () -> hood.setHoodSpeed(0),
-                                                hood)); */
+
+                new JoystickButton(joystick2, Button.kRightBumper.value).whileHeld(new StartEndCommand(
+                                () -> hood.setHoodSpeed(HoodConstants.speed),
+                                () -> hood.setHoodSpeed(0),
+                                hood));
+
+                new JoystickButton(joystick2, Button.kRightBumper.value).whileHeld(new StartEndCommand(
+                                () -> hood.setHoodSpeed(-HoodConstants.speed),
+                                () -> hood.setHoodSpeed(0),
+                                hood));
 
                 /* Joystick 2 */
                 /* Shooting next to fender */

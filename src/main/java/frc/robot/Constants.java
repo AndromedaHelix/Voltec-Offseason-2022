@@ -53,10 +53,10 @@ public final class Constants {
     public static final class HoodConstants {
         public static final int hoodID = 2;
 
-        public static final int forwardLimit = 0; //TODO: FIX
-        public static final int reverseLimit = 10;
+        public static final float forwardLimit = (float) 0.38; //TODO: FIX
+        public static final float reverseLimit = (float) 0.04;
 
-        public static final double speed = 0.1;
+        public static final double speed = 0.01;
     }
 
     public static final class DeliveryConstants {
@@ -81,5 +81,4 @@ public final class Constants {
         public static final double min_aim_command = 0.0235;
         public static final double steeringAdjust = 0.0;
     }
-
 }
