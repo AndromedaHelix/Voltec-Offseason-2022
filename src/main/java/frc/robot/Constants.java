@@ -45,7 +45,7 @@ public final class Constants {
 
         // Shooting velocities from diff positinos
         public static final int shooterFender = 3500;
-        public static final int shooter1MeterFender = 4000;
+        public static final int shooter1MeterFender = 2650;
 
         public static int velocityTolerance = 25;
     }
