@@ -91,18 +91,6 @@ public class RobotContainer {
                                 .whileHeld(new StartEndCommand(() -> limelight.toggleAim(), () -> limelight.toggleAim(),
                                                 limelight));
 
-                /* Move hood */
-
-                new JoystickButton(joystick2, Button.kRightBumper.value).whileHeld(new StartEndCommand(
-                                () -> hood.setHoodSpeed(HoodConstants.speed),
-                                () -> hood.setHoodSpeed(0),
-                                hood));
-
-                new JoystickButton(joystick2, Button.kRightBumper.value).whileHeld(new StartEndCommand(
-                                () -> hood.setHoodSpeed(-HoodConstants.speed),
-                                () -> hood.setHoodSpeed(0),
-                                hood));
-
                 /* Joystick 2 */
                 /* Shooting next to fender */
                 new JoystickButton(joystick2, Button.kA.value)
@@ -150,9 +138,21 @@ public class RobotContainer {
                                                 () -> intake.setIntakeMotorSpeed(0),
                                                 intake));
 
+                /* Move hood */
+                new JoystickButton(joystick2, Button.kRightBumper.value).whileHeld(new StartEndCommand(
+                                () -> hood.setHoodSpeed(HoodConstants.speed),
+                                () -> hood.setHoodSpeed(0),
+                                hood));
+
+                new JoystickButton(joystick2, Button.kRightBumper.value).whileHeld(new StartEndCommand(
+                                () -> hood.setHoodSpeed(-HoodConstants.speed),
+                                () -> hood.setHoodSpeed(0),
+                                hood));
+
                 /* Inverse rotate delivery */
-                new JoystickButton(joystick2, Button.kRightBumper.value)
-                                .whileHeld(new DeliveryEnable(-0.3, delivery));
+                joystick2.Dpad.Left.whileHeld(
+                        new DeliveryEnable(-0.3, delivery));
+               
         }
 
         public Command getAutonomousCommand() {
