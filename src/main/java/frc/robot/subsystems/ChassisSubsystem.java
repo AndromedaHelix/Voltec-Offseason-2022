@@ -68,7 +68,6 @@ public class ChassisSubsystem extends SubsystemBase {
   public void tankDrive(double leftSpeed, double rightSpeed) {
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
-    orchestra.play();
 
     chassis.tankDrive(leftSpeed, rightSpeed);
   }
