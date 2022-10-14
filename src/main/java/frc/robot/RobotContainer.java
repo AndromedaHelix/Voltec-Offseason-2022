@@ -169,7 +169,7 @@ public class RobotContainer {
                                 // new RunCommand(()->intake.toggleIntake(), intake).withTimeout(0.11),
                                 // new
                                 // RunCommand(()->intake.toggleIntake()).withInterrupt(intake.intakeOut::get),
-                                new RunCommand(() -> chassis.tankDrive(.45, .45), chassis).withTimeout(2),
+                                new RunCommand(() -> chassis.tankDrive(.45, .45), chassis).withTimeout(1),
                                 new RunCommand(() -> chassis.tankDrive(0, 0), chassis).withTimeout(.2));
 
         }
