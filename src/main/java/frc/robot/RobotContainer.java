@@ -183,7 +183,16 @@ public class RobotContainer {
                                 // new
                                 // RunCommand(()->intake.toggleIntake()).withInterrupt(intake.intakeOut::get),
                                 new RunCommand(() -> chassis.tankDrive(.45, .45), chassis).withTimeout(2),
-                                new RunCommand(() -> chassis.tankDrive(0, 0), chassis).withTimeout(.2)
+                                new RunCommand(() -> chassis.tankDrive(0, 0), chassis).withTimeout(.2),
+                                new IntakeOut(intake).withTimeout(0.3),
+                                new ParallelCommandGroup(
+                                                new RunCommand(() -> chassis.tankDrive(-.45, -.45), chassis),
+                                                new StartEndCommand(
+                                                                () -> intake.setIntakeMotorSpeed(.7),
+                                                                () -> intake.setIntakeMotorSpeed(0)))
+                                                .withTimeout(2),
+                                new RunCommand(() -> chassis.tankDrive(0, 0), chassis).withTimeout(.3),
+                                new IntakeIn(intake).withTimeout(0.5)
                 /*
                  * new SequentialCommandGroup(
                  * new ShooterSpeed(3550, shooter),
