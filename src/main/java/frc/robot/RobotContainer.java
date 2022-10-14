@@ -156,9 +156,10 @@ public class RobotContainer {
         }
 
         public Command getAutonomousCommand() {
+                return null;
                 // An ExampleCommand will run in autonomous
-                return new SequentialCommandGroup(
-                                // Disparar primera pelota
+/*                 return new SequentialCommandGroup(
+ */                                // Disparar primera pelota
                                 /*
                                  * new SequentialCommandGroup(
                                  * new ShooterSpeed(3580, shooter),
@@ -170,7 +171,7 @@ public class RobotContainer {
                                 // new
                                 // RunCommand(()->intake.toggleIntake()).withInterrupt(intake.intakeOut::get),
 
-                                new IntakeOut(intake).withTimeout(0.3),
+                                /* new IntakeOut(intake).withTimeout(0.3),
                                 new ParallelCommandGroup(
                                                 new RunCommand(() -> chassis.tankDrive(-.45, -.45), chassis),
                                                 new StartEndCommand(
@@ -192,12 +193,12 @@ public class RobotContainer {
                                                                 () -> intake.setIntakeMotorSpeed(0)))
                                                 .withTimeout(2),
                                 new RunCommand(() -> chassis.tankDrive(0, 0), chassis).withTimeout(.3),
-                                new IntakeIn(intake).withTimeout(0.5)
+                                new IntakeIn(intake).withTimeout(0.5) */
                 /*
                  * new SequentialCommandGroup(
                  * new ShooterSpeed(3550, shooter),
                  * new DeliveryEnable(0.7, delivery)).withTimeout(4),
                  * new ShooterSpeed(0, shooter));
-                 */);
+                 */
         }
 }
