@@ -151,18 +151,20 @@ public class RobotContainer {
 
                 /* Inverse rotate delivery */
                 joystick2.Dpad.Left.whileHeld(
-                        new DeliveryEnable(-0.3, delivery));
-               
+                                new DeliveryEnable(-0.3, delivery));
+
         }
 
         public Command getAutonomousCommand() {
                 // An ExampleCommand will run in autonomous
                 return new SequentialCommandGroup(
                                 // Disparar primera pelota
-                                new SequentialCommandGroup(
-                                                new ShooterSpeed(3580, shooter),
-                                                new DeliveryEnable(0.7, delivery)).withTimeout(2),
-                                new ShooterSpeed(0, shooter),
+                                /*
+                                 * new SequentialCommandGroup(
+                                 * new ShooterSpeed(3580, shooter),
+                                 * new DeliveryEnable(0.7, delivery)).withTimeout(2),
+                                 * new ShooterSpeed(0, shooter),
+                                 */
 
                                 // Ir por segunda pelota
                                 // new
@@ -181,10 +183,12 @@ public class RobotContainer {
                                 // new
                                 // RunCommand(()->intake.toggleIntake()).withInterrupt(intake.intakeOut::get),
                                 new RunCommand(() -> chassis.tankDrive(.45, .45), chassis).withTimeout(2),
-                                new RunCommand(() -> chassis.tankDrive(0, 0), chassis).withTimeout(.2),
-                                new SequentialCommandGroup(
-                                                new ShooterSpeed(3550, shooter),
-                                                new DeliveryEnable(0.7, delivery)).withTimeout(4),
-                                new ShooterSpeed(0, shooter));
+                                new RunCommand(() -> chassis.tankDrive(0, 0), chassis).withTimeout(.2)
+                /*
+                 * new SequentialCommandGroup(
+                 * new ShooterSpeed(3550, shooter),
+                 * new DeliveryEnable(0.7, delivery)).withTimeout(4),
+                 * new ShooterSpeed(0, shooter));
+                 */);
         }
 }
