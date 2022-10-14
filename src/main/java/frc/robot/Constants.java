@@ -28,8 +28,8 @@ public final class Constants {
     public static final class ClimberConstants {
         public static final int climberMotorID = 4;
 
-        public static final int forwardLimit = 155; // 165
-        public static final int reverseLimit = 15; // 10
+        public static final int forwardLimit = 165; // 165
+        public static final int reverseLimit = 10; // 10
 
         public static final double speed = 0.8;
     }
